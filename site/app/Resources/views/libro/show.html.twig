@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Libro</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ libro.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ libro.Nombre }}</td>
+            </tr>
+            <tr>
+                <th>Pagina</th>
+                <td>{{ libro.Pagina }}</td>
+            </tr>
+            <tr>
+                <th>Annio</th>
+                <td>{{ libro.Annio }}</td>
+            </tr>
+            <tr>
+                <th>Licencia</th>
+                <td>{{ libro.Licencia }}</td>
+            </tr>
+            <tr>
+                <th>Sinopsis</th>
+                <td>{{ libro.Sinopsis }}</td>
+            </tr>
+            <tr>
+                <th>Aprobado</th>
+                <td>{% if libro.Aprobado %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Archivo</th>
+                <td>{{ libro.Archivo }}</td>
+            </tr>
+            <tr>
+                <th>Foto</th>
+                <td>{{ libro.Foto }}</td>
+            </tr>
+            <tr>
+                <th>Autor_idautor</th>
+                <td>{{ libro.AutoridAutor }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('libro_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('libro_edit', { 'id': libro.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
