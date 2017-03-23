@@ -1,3 +1,11 @@
+principal_biblioteca_comentario:
+    resource: "@PrincipalBibliotecaBundle/Controller/ComentarioController.php"
+    type:     annotation
+
+principal_biblioteca_categorium:
+    resource: "@PrincipalBibliotecaBundle/Controller/CategoriumController.php"
+    type:     annotation
+
 principal_biblioteca_libro:
     resource: "@PrincipalBibliotecaBundle/Controller/LibroController.php"
     type:     annotation
