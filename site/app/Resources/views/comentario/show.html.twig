@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Comentario</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ comentario.id }}</td>
+            </tr>
+            <tr>
+                <th>Comentario</th>
+                <td>{{ comentario.Comentario }}</td>
+            </tr>
+            <tr>
+                <th>Fechahora</th>
+                <td>{% if comentario.FechaHora %}{{ comentario.FechaHora|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Libro_id</th>
+                <td>{{ comentario.Libroid }}</td>
+            </tr>
+            <tr>
+                <th>Usuario_id</th>
+                <td>{{ comentario.Usuarioid }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('comentario_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('comentario_edit', { 'id': comentario.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

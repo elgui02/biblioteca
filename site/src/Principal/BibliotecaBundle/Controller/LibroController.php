@@ -3,9 +3,12 @@
 namespace Principal\BibliotecaBundle\Controller;
 
 use Principal\BibliotecaBundle\Entity\Libro;
+use Principal\BibliotecaBundle\Entity\Autor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use \DateTime;
 
 /**
  * Libro controller.
@@ -34,12 +37,15 @@ class LibroController extends Controller
     /**
      * Creates a new libro entity.
      *
-     * @Route("/new", name="libro_new")
+     * @Route("/{id}/new", name="libro_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, Autor $autor)
     {
         $libro = new Libro();
+        $libro->setAutor($autor);
+        $libro->setUsuario($this->getUser());
+        $libro->setFechaHora(new \DateTime());
         $form = $this->createForm('Principal\BibliotecaBundle\Form\LibroType', $libro);
         $form->handleRequest($request);
 

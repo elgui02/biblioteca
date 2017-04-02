@@ -23,8 +23,8 @@ class AutorController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $autors = $em->getRepository('PrincipalBibliotecaBundle:Autor')->findAprobadosUsuario($this->getUser()->getId());
 
-        $autors = $em->getRepository('PrincipalBibliotecaBundle:Autor')->findAll();
 
         return $this->render('autor/index.html.twig', array(
             'autors' => $autors,
@@ -40,6 +40,7 @@ class AutorController extends Controller
     public function newAction(Request $request)
     {
         $autor = new Autor();
+        $autor->setUsuario($this->getUser());
         $form = $this->createForm('Principal\BibliotecaBundle\Form\AutorType', $autor);
         $form->handleRequest($request);
 

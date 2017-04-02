@@ -12,3 +12,4 @@ site/var/*
 >>>>>>> 1c0fe6738d15d4fbd4fd2e2a01f282b43c306d65
 site/app/cache/*
 site/app/logs/*
+site/web/uploads/*

@@ -1,52 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Libro</h1>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ libro.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ libro.Nombre }}</td>
-            </tr>
-            <tr>
-                <th>Pagina</th>
-                <td>{{ libro.Pagina }}</td>
-            </tr>
-            <tr>
-                <th>Annio</th>
-                <td>{{ libro.Annio }}</td>
-            </tr>
-            <tr>
-                <th>Licencia</th>
-                <td>{{ libro.Licencia }}</td>
-            </tr>
-            <tr>
-                <th>Sinopsis</th>
-                <td>{{ libro.Sinopsis }}</td>
-            </tr>
-            <tr>
-                <th>Aprobado</th>
-                <td>{% if libro.Aprobado %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Archivo</th>
-                <td>{{ libro.Archivo }}</td>
-            </tr>
-            <tr>
-                <th>Foto</th>
-                <td>{{ libro.Foto }}</td>
-            </tr>
-            <tr>
-                <th>Autor_idautor</th>
-                <td>{{ libro.AutoridAutor }}</td>
-            </tr>
-        </tbody>
-    </table>
+<img class="img-responsive img-blog" src="{{asset('uploads/libros/')}}/{{libro.FotoName}}" width="100%" alt="" />
+<div class="row">
+<div class="col-xs-12 col-sm-2 text-center">
+    <div class="entry-meta">
+        <span id="publish_date">{{libro.FechaHora | date("d-m-Y")}}</span>
+        <span><i class="fa fa-book">{{libro.Pagina}}</i> Páginas</span>
+        <span><i class="fa fa-comment"></i>{{libro.Comentarios | length}} Comentarios</span>
+        <span><i class="fa fa-user"></i>{{libro.Licencium.Alias}}</span>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-10 blog-content">
+    {% if not libro.Aprobado %}
+        <h3><i class="fa fa-warning"></i>Su libro no ha sido aún aprobado, nuestros administradores estan trabajando en ello, gracias por su paciencia</h3>
+    {% endif %}
+    <h2>{{libro.Nombre}}</h2>
+    <h3>{{libro.Sinopsis}}</h3>
+    <div class="post-tags">
+        <strong>Tag:</strong> {%for categoria in libro.CategoriaLibros %}<a href="#">{{categoria.Categoria}}</a> / {%endfor%}
+    </div>
+</div>
+</div>
 
     <ul>
         <li>

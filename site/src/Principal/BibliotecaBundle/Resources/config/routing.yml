@@ -1,3 +1,3 @@
-principal_biblioteca_homepage:
+homepage:
     path:     /
     defaults: { _controller: PrincipalBibliotecaBundle:Default:index }

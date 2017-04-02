@@ -1,35 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Autors list</h1>
+    <h1>Lista de autores</h1>
 
-    <table>
+    <div>
+        <input type="checkbox" id="mautores"><label>Ver mis autores</label>
+    </div>
+
+    <table id="datatable" class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Foto</th>
                 <th>Nombre</th>
                 <th>Nacionalidad</th>
-                <th>Aprobado</th>
-                <th>Foto</th>
-                <th>Actions</th>
+                <th>user</th>
+                <th>Actiones</th>
             </tr>
         </thead>
         <tbody>
         {% for autor in autors %}
             <tr>
-                <td><a href="{{ path('autor_show', { 'id': autor.id }) }}">{{ autor.id }}</a></td>
-                <td>{{ autor.Nombre }}</td>
+                <td><img src="{{asset('uploads/autores')}}/{{autor.FotoName}}" class="img-circle" width="50"  height="auto"></td>
+                
+                <td><a href="{{ path('autor_show', { 'id': autor.id }) }}">{{ autor.Nombre }}</a></td>
                 <td>{{ autor.Nacionalidad }}</td>
-                <td>{% if autor.Aprobado %}Yes{% else %}No{% endif %}</td>
-                <td>{{ autor.Foto }}</td>
+                <td>{{ autor.Usuario.id == app.user.id ? '1' : '0' }}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('autor_show', { 'id': autor.id }) }}">show</a>
+                            <a href="{{ path('libro_new', { 'id': autor.id }) }}">usar</a>
                         </li>
                         <li>
-                            <a href="{{ path('autor_edit', { 'id': autor.id }) }}">edit</a>
+                            <a href="{{ path('autor_show', { 'id': autor.id }) }}">ver</a>
                         </li>
+                        {% if app.user.id ==  autor.Usuario.id %}
+                        <li>
+                            <a href="{{ path('autor_edit', { 'id': autor.id }) }}">editar</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </td>
             </tr>
@@ -39,7 +47,28 @@
 
     <ul>
         <li>
-            <a href="{{ path('autor_new') }}">Create a new autor</a>
+            <a href="{{ path('autor_new') }}">Crear autor</a>
         </li>
     </ul>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$(document).ready(function() {
+    $('#datatable').DataTable( {
+        "columnDefs": [
+            {
+                "targets": [ 3 ],
+                "visible": false,
+                "searchable": false
+            },
+        ]
+    } );
+} );
+
+$('.checkbox').click(function() {
+    var user = ($(this).is(':checked')?1:0);
+    $("#datatable").DataTable().columns(3).search(user).draw();
+});
+</script>
 {% endblock %}

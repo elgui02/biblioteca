@@ -33,8 +33,8 @@ class Categorium
     protected $Categoria;
 
     /**
-     * @ORM\OneToMany(targetEntity="CategoriaLibro", mappedBy="categorium")
-     * @ORM\JoinColumn(name="id", referencedColumnName="Categoria_id")
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Libro", inversedBy="categorium")
      */
     protected $categoriaLibros;
 
@@ -95,8 +95,9 @@ class Categorium
      * @param \Principal\BibliotecaBundle\Entity\CategoriaLibro $categoriaLibro
      * @return \Principal\BibliotecaBundle\Entity\Categorium
      */
-    public function addCategoriaLibro(CategoriaLibro $categoriaLibro)
+    public function addCategoriaLibro($categoriaLibro)
     {
+        $categoriaLibro->setCategorium($this);
         $this->categoriaLibros[] = $categoriaLibro;
 
         return $this;
@@ -108,7 +109,7 @@ class Categorium
      * @param \Principal\BibliotecaBundle\Entity\CategoriaLibro $categoriaLibro
      * @return \Principal\BibliotecaBundle\Entity\Categorium
      */
-    public function removeCategoriaLibro(CategoriaLibro $categoriaLibro)
+    public function removeCategoriaLibro(Libro $categoriaLibro)
     {
         $this->categoriaLibros->removeElement($categoriaLibro);
 
@@ -128,5 +129,10 @@ class Categorium
     public function __sleep()
     {
         return array('id', 'Categoria');
+    }
+
+    public function __toString()
+    {
+        return $this->Categoria;
     }
 }

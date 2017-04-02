@@ -1,16 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Libro creation</h1>
+<div class="row">
+<div class="col-xs-12 col-sm-10 blog-content">
+    <h2>Asignar libro al autor: {{libro.Autor.Nombre}}</h2>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+         {{ form_widget(form) }}
+         <input type="submit" class="btn-primary" value="Guardar" />     
+   {{ form_end(form) }}
 
+    <div class="row col-xs-12 col-sm-10 ">
     <ul>
         <li>
-            <a href="{{ path('libro_index') }}">Back to the list</a>
+            <a href="{{ path('autor_index') }}">Regresar a los autores</a>
         </li>
     </ul>
+    </div>
+</div>
+</div>
 {% endblock %}

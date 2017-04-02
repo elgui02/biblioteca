@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="col-sm-6">
+        <ul class="blog_category">
+            {% for categorium in categoria %}
+                <li><a href="{{ path('categoria_show', { 'id': categorium.id }) }}">{{ categorium.Categoria }} <span class="badge">{{categorium.categoriaLibros | length }}</span></a></li>
+            {% endfor%}
+        </ul>
+    </div>
+</div>

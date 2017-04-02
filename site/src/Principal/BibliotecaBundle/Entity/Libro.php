@@ -11,12 +11,15 @@ namespace Principal\BibliotecaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Principal\BibliotecaBundle\Entity\Libro
  *
  * @ORM\Entity()
- * @ORM\Table(name="Libro", indexes={@ORM\Index(name="fk_Libro_Autor_idx", columns={"Autor_id"}), @ORM\Index(name="fk_Libro_Usuario1_idx", columns={"Usuario_id"})})
+ * @Vich\Uploadable
+ * @ORM\Table(name="Libro", indexes={@ORM\Index(name="fk_Libro_Autor_idx", columns={"autor_id"}), @ORM\Index(name="fk_Libro_Usuario1_idx", columns={"usuario_id"}), @ORM\Index(name="fk_Libro_Licencia1_idx", columns={"licencia_id"})})
  */
 class Libro
 {
@@ -43,11 +46,6 @@ class Libro
     protected $Annio;
 
     /**
-     * @ORM\Column(type="string", length=45, nullable=true)
-     */
-    protected $Licencia;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $Sinopsis;
@@ -63,9 +61,27 @@ class Libro
     protected $Archivo;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="libro", fileNameProperty="Archivo")
+     * 
+     * @var File
+     */
+    private $File;
+    
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="libro", fileNameProperty="FotoName")
+     * 
+     * @var File
      */
     protected $Foto;
+    
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $FotoName;
 
     /**
      * @ORM\Column(type="bigint")
@@ -83,8 +99,13 @@ class Libro
     protected $Usuario_id;
 
     /**
-     * @ORM\OneToMany(targetEntity="CategoriaLibro", mappedBy="libro")
-     * @ORM\JoinColumn(name="id", referencedColumnName="Libro_id")
+     * @ORM\Column(type="integer")
+     */
+    protected $Licencia_id;
+    
+    /**
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="Categorium", inversedBy="libros")
      */
     protected $categoriaLibros;
 
@@ -96,15 +117,21 @@ class Libro
 
     /**
      * @ORM\ManyToOne(targetEntity="Autor", inversedBy="libros")
-     * @ORM\JoinColumn(name="Autor_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="autor_id", referencedColumnName="id")
      */
     protected $autor;
 
     /**
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="libros")
-     * @ORM\JoinColumn(name="Usuario_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     protected $usuario;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Licencium", inversedBy="libros")
+     * @ORM\JoinColumn(name="licencia_id", referencedColumnName="id")
+     */
+    protected $licencium;
 
     public function __construct()
     {
@@ -205,19 +232,6 @@ class Libro
     }
 
     /**
-     * Set the value of Licencia.
-     *
-     * @param string $Licencia
-     * @return \Principal\BibliotecaBundle\Entity\Libro
-     */
-    public function setLicencia($Licencia)
-    {
-        $this->Licencia = $Licencia;
-
-        return $this;
-    }
-
-    /**
      * Get the value of Licencia.
      *
      * @return string
@@ -297,12 +311,44 @@ class Libro
     }
 
     /**
-     * Set the value of Foto.
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
-     * @param string $Foto
-     * @return \Principal\BibliotecaBundle\Entity\Libro
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     *
+     * @return Product
      */
-    public function setFoto($Foto)
+    public function setFile(File $libro = null)
+    {
+        $this->File = $libro;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getFile()
+    {
+        return $this->File;
+    }
+
+    
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     *
+     * @return Product
+     */
+    public function setFoto(File $Foto = null)
     {
         $this->Foto = $Foto;
 
@@ -318,6 +364,30 @@ class Libro
     {
         return $this->Foto;
     }
+    
+    /**
+     * Set the value of FotoName.
+     *
+     * @param string $FotoName
+     * @return \Principal\BibliotecaBundle\Entity\Libro
+     */
+    public function setFotoName($FotoName)
+    {
+        $this->FotoName = $FotoName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Foto.
+     *
+     * @return string
+     */
+    public function getFotoName()
+    {
+        return $this->FotoName;
+    }
+
 
     /**
      * Set the value of Autor_id.
@@ -389,13 +459,37 @@ class Libro
     }
 
     /**
-     * Add CategoriaLibro entity to collection (one to many).
+     * Set the value of Licencia_id.
      *
-     * @param \Principal\BibliotecaBundle\Entity\CategoriaLibro $categoriaLibro
+     * @param integer $Licencia_id
      * @return \Principal\BibliotecaBundle\Entity\Libro
      */
-    public function addCategoriaLibro(CategoriaLibro $categoriaLibro)
+    public function setLicenciaId($Licencia_id)
     {
+        $this->Licencia_id = $Licencia_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of Licencia_id.
+     *
+     * @return integer
+     */
+    public function getLicenciaId()
+    {
+        return $this->Licencia_id;
+    }
+
+    /**
+     * Add CategoriaLibro entity to collection (one to many).
+     *
+     * @param \Principal\BibliotecaBundle\Entity\Libro $categoriaLibro
+     * @return \Principal\BibliotecaBundle\Entity\Libro
+     */
+    public function addCategoriaLibro($categoriaLibro)
+    {
+        $categoriaLibro->setLibro($this);
         $this->categoriaLibros[] = $categoriaLibro;
 
         return $this;
@@ -407,7 +501,7 @@ class Libro
      * @param \Principal\BibliotecaBundle\Entity\CategoriaLibro $categoriaLibro
      * @return \Principal\BibliotecaBundle\Entity\Libro
      */
-    public function removeCategoriaLibro(CategoriaLibro $categoriaLibro)
+    public function removeCategoriaLibro(Categorium $categoriaLibro)
     {
         $this->categoriaLibros->removeElement($categoriaLibro);
 
@@ -506,8 +600,36 @@ class Libro
         return $this->usuario;
     }
 
+    /**
+     * Set Licencium entity (many to one).
+     *
+     * @param \Principal\BibliotecaBundle\Entity\Licencium $licencium
+     * @return \Principal\BibliotecaBundle\Entity\Libro
+     */
+    public function setLicencium(Licencium $licencium = null)
+    {
+        $this->licencium = $licencium;
+
+        return $this;
+    }
+
+    /**
+     * Get Licencium entity (many to one).
+     *
+     * @return \Principal\BibliotecaBundle\Entity\Licencium
+     */
+    public function getLicencium()
+    {
+        return $this->licencium;
+    }
+
     public function __sleep()
     {
-        return array('id', 'Nombre', 'Pagina', 'Annio', 'Licencia', 'Sinopsis', 'Aprobado', 'Archivo', 'Foto', 'Autor_id', 'FechaHora', 'Usuario_id');
+        return array('id', 'Nombre', 'Pagina', 'Annio', 'Licencia', 'Sinopsis', 'Aprobado', 'Archivo', 'Foto', 'Autor_id', 'FechaHora', 'Usuario_id', 'Licencia_id');
+    }
+
+    public function __toString()
+    {
+        return $this->Nombre;
     }
 }

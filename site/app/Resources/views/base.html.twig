@@ -14,6 +14,7 @@
     <link href="{{ asset('bundles/principalbiblioteca/css/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/principalbiblioteca/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/principalbiblioteca/css/responsive.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
     {% block stylesheets %}{% endblock stylesheets %}
     <!--[if lt IE 9]>
     <script src="{{ asset('bundles/principalbiblioteca/js/html5shiv.js') }}"></script>
@@ -63,8 +64,10 @@
                 <div class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="blog.html">Blog</a></li> 
-                        <li><a href="contact-us.html">Contact</a></li>                        
+                        {%if app.user %}
+                            <li><a href="blog.html">Mis publicaciones</a></li> 
+                            <li><a href="{{path('fos_user_security_logout')}}">Cerrar sesión</a></li>                        
+                        {% endif %}
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -77,68 +80,30 @@
             <h2>Biblioteca libre</h2>
             <p class="lead">Libros con licencia Creative Commons</p>
         </div>
-
-        <div class="blog">
-            {% block body %}
-            {% endblock body %}
+        <div class="blog"> 
             <div class="row">
                  <div class="col-md-8">
                     <div class="blog-item">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-2 text-center">
-                                <div class="entry-meta">
-                                    <span id="publish_date">07  NOV</span>
-                                    <span><i class="fa fa-user"></i> <a href="#">John Doe</a></span>
-                                    <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">2 Comments</a></span>
-                                    <span><i class="fa fa-heart"></i><a href="#">56 Likes</a></span>
-                                </div>
-                            </div>
-                                
-                            <div class="col-xs-12 col-sm-10 blog-content">
-                                <a href="#"><img class="img-responsive img-blog" src="{{ asset('bundles/principalbiblioteca/images/blog/blog1.jpg') }}" width="100%" alt="" /></a>
-                                <h2><a href="blog-item.html">Consequat bibendum quam liquam viverra</a></h2>
-                                <h3>Curabitur quis libero leo, pharetra mattis eros. Praesent consequat libero eget dolor convallis vel rhoncus magna scelerisque. Donec nisl ante, elementum eget posuere a, consectetur a metus. Proin a adipiscing sapien. Suspendisse vehicula porta lectus vel semper. Nullam sapien elit, lacinia eu tristique non.posuere at mi. Morbi at turpis id urna ullamcorper ullamcorper.</h3>
-                                <a class="btn btn-primary readmore" href="blog-item.html">Read More <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>    
+                        {% block body %}
+                        {% endblock body %}
                     </div><!--/.blog-item-->
                         
-                    <div class="blog-item">
-                        <div class="row">
-                             <div class="col-sm-2 text-center">
-                                <div class="entry-meta"> 
-                                    <span id="publish_date">07  NOV</span>
-                                    <span><i class="fa fa-user"></i> <a href="#">John Doe</a></span>
-                                    <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">2 Comments</a></span>
-                                    <span><i class="fa fa-heart"></i><a href="#">56 Likes</a></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-10 blog-content">
-                                <a href=""><img class="img-responsive img-blog" src="images/blog/blog2.jpg" width="100%" alt="" /></a>
-                                <h2><a href="blog-item.html">Consequat bibendum quam liquam viverra</a></h2>
-                                <h3>Curabitur quis libero leo, pharetra mattis eros. Praesent consequat libero eget dolor convallis vel rhoncus magna scelerisque. Donec nisl ante, elementum eget posuere a, consectetur a metus. Proin a adipiscing sapien. Suspendisse vehicula porta lectus vel semper. Nullam sapien elit, lacinia eu tristique non.posuere at mi. Morbi at turpis id urna ullamcorper ullamcorper.</h3>
-                                <a class="btn btn-primary readmore" href="blog-item.html">Read More <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>    
-                    </div><!--/.blog-item-->
-                        
-                    <ul class="pagination pagination-lg">
-                        <li><a href="#"><i class="fa fa-long-arrow-left"></i>Previous Page</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">Next Page<i class="fa fa-long-arrow-right"></i></a></li>
-                    </ul><!--/.pagination-->
-                </div><!--/.col-md-8-->
+                    {% block pagination %}
+                    {% endblock %}
+                 </div><!--/.col-md-8-->
 
                 <aside class="col-md-4">
                     <!-- <div class="widget search">
                         <form role="form">
                                 <input type="text" class="form-control search_box" autocomplete="off" placeholder="Search Here">
                         </form>
-                    </div> -->			
+                    </div> -->		
+                    {% if not app.user %}
+                    <div class="widget categories">
+                        {{ render(controller('FOSUserBundle:Security:login')) }}
+                        Si aún no tienes cuenta puedes registrarte <a href="{{ path("fos_user_registration_register") }}">aqui</a>
+                    </div><!--/.recent comments-->
+	                {% endif%}
     				<div class="widget categories">
                         <h3>Comentarios recientes</h3>
                         {{ render(controller('PrincipalBibliotecaBundle:Comentario:index')) }}
@@ -244,6 +209,9 @@
     <script src="{{ asset('bundles/principalbiblioteca/js/jquery.isotope.min.js') }}"></script>
     <script src="{{ asset('bundles/principalbiblioteca/js/main.js') }}"></script>
     <script src="{{ asset('bundles/principalbiblioteca/js/wow.min.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     {% block javascripts %}{%endblock javascripts %}
 </body>
 </html>

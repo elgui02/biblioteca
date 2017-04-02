@@ -38,6 +38,9 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        # other form themes
+        - 'VichUploaderBundle:Form:fields.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -78,7 +81,37 @@ fos_user:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
 
+vich_uploader:
+    db_driver: orm
+    mappings:
+        libro:
+            uri_prefix:         /libros
+            upload_destination: '%kernel.root_dir%/../web/uploads/libros'
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+        autor:
+            uri_prefix:         /autores
+            upload_destination: '%kernel.root_dir%/../web/uploads/autores'
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true
+
+knp_paginator:
+    page_range: 5                      # rango por defecto de paginas en los controles del paginador
+    default_options:
+        page_name: page                # nombre del parámetro de la URL para la página
+        sort_field_name: sort          # nombre del parámetro de la URL para la ordenación
+        sort_direction_name: direction # nombre del parámetro de la URL para la dirección(ASC o DESC)
+        distinct: true                 # Garantizar resultados distintos
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig  # plantilla controles
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # plantilla links ordenación
+
 easy_admin:
     entities:
         - Principal\BibliotecaBundle\Entity\Usuario
         - Principal\BibliotecaBundle\Entity\Categorium
+        - Principal\BibliotecaBundle\Entity\Licencium
+        - Principal\BibliotecaBundle\Entity\Libro
+

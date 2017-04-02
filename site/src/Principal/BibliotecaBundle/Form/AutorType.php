@@ -5,6 +5,7 @@ namespace Principal\BibliotecaBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AutorType extends AbstractType
 {
@@ -13,7 +14,19 @@ class AutorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('Nombre')->add('Nacionalidad')->add('Aprobado')->add('Foto');
+        $builder
+            ->add('Nombre',null,array(
+                'attr' => array('class' => 'form-control')
+            ))
+            ->add('Nacionalidad',null,array(
+                'attr' => array('class' => 'form-control')
+            ))
+            ->add('Foto', VichFileType::class, [
+                'required' => false,
+                'allow_delete' => true, // not mandatory, default is true
+                'download_link' => true, // not mandatory, default is true
+                'attr' => array('class'=>'form-control'),
+            ]);
     }
     
     /**

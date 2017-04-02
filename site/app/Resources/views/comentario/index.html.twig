@@ -1,0 +1,13 @@
+{% for comentario in comentarios %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="single_comments">
+            <img src="{{ asset('bundles/principalbiblioteca/images/blog/avatar3.png') }}" />
+            <p>{{comentario.Comentario}}</p>
+            <div class="entry-meta small muted">
+                <span>By: {{comentario.Usuario.Username}}</span><span>On <a href="{{path('default_post',{ 'id':comentario.Libro.id})}}">{{comentario.Libro.Nombre}}</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
