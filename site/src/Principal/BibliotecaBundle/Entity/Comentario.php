@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Principal\BibliotecaBundle\Entity\Comentario
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Principal\BibliotecaBundle\Entity\ComentarioRepository")
  * @ORM\Table(name="Comentario", indexes={@ORM\Index(name="fk_Comentario_Libro1_idx", columns={"libro_id"}), @ORM\Index(name="fk_Comentario_Usuario1_idx", columns={"usuario_id"})})
  */
 class Comentario

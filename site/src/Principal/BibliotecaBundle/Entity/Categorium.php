@@ -15,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Principal\BibliotecaBundle\Entity\Categorium
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Principal\BibliotecaBundle\Entity\CategoriaRepository"))
  * @ORM\Table(name="Categoria")
  */
 class Categorium

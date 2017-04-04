@@ -4,7 +4,8 @@ namespace Principal\BibliotecaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Principal\BibliotecaBundle\Entity\Libro;
 
 /**
@@ -24,7 +25,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $dql = "SELECT l FROM PrincipalBibliotecaBundle:Libro l WHERE l.Aprobado = true";
+        $dql = "SELECT l FROM PrincipalBibliotecaBundle:Libro l WHERE l.Aprobado = true ORDER BY l.FechaHora DESC";
         $query = $em->createQuery($dql);
  
         $paginator = $this->get('knp_paginator');

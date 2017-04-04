@@ -1,24 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Categorium</h1>
+<div class="row">
+    <div class="col-xs-12 col-sm-10 blog-content">
+        <h2>Categoria: {{categorium.Categoria}}</h2>
+    </div>
+</div>
+{% for libro in pagination %}
+<div class="row">
+    <div class="col-xs-12 col-sm-2 text-center">
+        <div class="entry-meta">
+            <span id="publish_date">{{libro.FechaHora | date("d-m-Y")}}</span>
+            <span><i class="fa fa-book">{{libro.Pagina}}</i> Páginas</span>
+            <span><i class="fa fa-comment"></i>{{libro.Comentarios | length}} Comentarios</span>
+            <span><i class="fa fa-user"></i>{{libro.Licencium.Alias}}</span>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-10 blog-content">
+        <img class="img-responsive img-blog" src="{{asset('uploads/libros/')}}/{{libro.FotoName}}" width="100%" alt="" />
+        <h2><a href="{{ path('default_post', { 'id': libro.id }) }}">{{libro.Nombre}}</a></h2>
+        <h3>{{libro.Sinopsis}}</h3>
+        <a class="btn btn-primary readmore"href="{{ path('default_post', { 'id': libro.id }) }}">Leer más <i class="fa fa-angle-right"></i></a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ categorium.id }}</td>
-            </tr>
-            <tr>
-                <th>Categoria</th>
-                <td>{{ categorium.Categoria }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('categoria_index') }}">Back to the list</a>
-        </li>
-    </ul>
+{% block pagination %}
+    {{ knp_pagination_render(pagination) }}
 {% endblock %}

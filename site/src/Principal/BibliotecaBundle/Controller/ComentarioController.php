@@ -27,8 +27,11 @@ class ComentarioController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $comentarios = $em->getRepository('PrincipalBibliotecaBundle:Comentario')->findAll();
-
+        $comentarios = $em->getRepository('PrincipalBibliotecaBundle:Comentario')->findBy(
+            array(),
+            array('FechaHora' => 'DESC'),
+            5
+        );
         return $this->render('comentario/index.html.twig', array(
             'comentarios' => $comentarios,
         ));

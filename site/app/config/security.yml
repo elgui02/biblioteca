@@ -29,3 +29,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_USER }
         - { path: ^/autor/, role: ROLE_USER }
+        - { path: ^/libro/, role: ROLE_USER }
