@@ -49,11 +49,12 @@ class LibroType extends AbstractType
                 'attr' => array('class' => 'form-control')
             ])
             ->add('categoriaLibros',null,array(
+                'multiple' => true,
                 'attr' => array('class' => 'form-control')
             ))
             ->add('autor',null,array(
-                'attr' => array('class' => 'hidden'),
-                'label' => false,
+                'attr' => array('class' => 'form-control'),
+                'label' => 'Autores',
             ));
     }
     

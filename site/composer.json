@@ -16,9 +16,11 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/orm": "^2.5",
+        "friendsofsymfony/jsrouting-bundle": "@stable",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "incenteev/composer-parameter-handler": "^2.0",
         "javiereguiluz/easyadmin-bundle": "^1.16",
+        "knplabs/knp-paginator-bundle": "2.5.*",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "symfony/monolog-bundle": "^3.0.2",
@@ -26,9 +28,7 @@
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.2.*",
         "twig/twig": "^1.0||^2.0",
-        "vich/uploader-bundle": "^1.4",
-        "friendsofsymfony/jsrouting-bundle": "@stable",
-        "knplabs/knp-paginator-bundle": "2.5.*"
+        "vich/uploader-bundle": "^1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

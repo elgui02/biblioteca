@@ -37,13 +37,12 @@ class LibroController extends Controller
     /**
      * Creates a new libro entity.
      *
-     * @Route("/{id}/new", name="libro_new")
+     * @Route("/new", name="libro_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, Autor $autor)
+    public function newAction(Request $request)
     {
         $libro = new Libro();
-        $libro->setAutor($autor);
         $libro->setUsuario($this->getUser());
         $libro->setFechaHora(new \DateTime());
         $form = $this->createForm('Principal\BibliotecaBundle\Form\LibroType', $libro);

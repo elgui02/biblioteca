@@ -3,7 +3,7 @@
 {% block body %}
 <div class="row">
 <div class="col-xs-12 col-sm-10 blog-content">
-    <h2>Asignar libro al autor: {{libro.Autor.Nombre}}</h2>
+    <h2>Crear nuevo libro</h1>
 
     {{ form_start(form) }}
          {{ form_widget(form) }}
@@ -19,4 +19,10 @@
     </div>
 </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+  $('#principal_bibliotecabundle_libro_autor').select2();
+  $('#principal_bibliotecabundle_libro_categoriaLibros').select2();
+</script>
 {% endblock %}

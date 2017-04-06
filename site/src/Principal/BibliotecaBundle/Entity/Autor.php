@@ -66,8 +66,7 @@ class Autor
     protected $Usuario_id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Libro", mappedBy="autor")
-     * @ORM\JoinColumn(name="id", referencedColumnName="Autor_id")
+     * @ORM\ManyToMany(targetEntity="Libro", mappedBy="autor")
      */
     protected $libros;
 
@@ -249,8 +248,9 @@ class Autor
      * @param \Principal\BibliotecaBundle\Entity\Libro $libro
      * @return \Principal\BibliotecaBundle\Entity\Autor
      */
-    public function addLibro(Libro $libro)
+    public function addLibro(LibroAutor $libro)
     {
+        $libro->setAutor($this);
         $this->libros[] = $libro;
 
         return $this;

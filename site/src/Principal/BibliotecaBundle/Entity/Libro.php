@@ -19,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @ORM\Entity()
  * @Vich\Uploadable
- * @ORM\Table(name="Libro", indexes={@ORM\Index(name="fk_Libro_Autor_idx", columns={"autor_id"}), @ORM\Index(name="fk_Libro_Usuario1_idx", columns={"usuario_id"}), @ORM\Index(name="fk_Libro_Licencia1_idx", columns={"licencia_id"})})
+ * @ORM\Table(name="Libro", indexes={ @ORM\Index(name="fk_Libro_Usuario1_idx", columns={"usuario_id"}), @ORM\Index(name="fk_Libro_Licencia1_idx", columns={"licencia_id"})})
  */
 class Libro
 {
@@ -84,11 +84,6 @@ class Libro
     protected $FotoName;
 
     /**
-     * @ORM\Column(type="bigint")
-     */
-    protected $Autor_id;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $FechaHora;
@@ -116,8 +111,7 @@ class Libro
     protected $comentarios;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Autor", inversedBy="libros")
-     * @ORM\JoinColumn(name="autor_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Autor", inversedBy="libros")
      */
     protected $autor;
 
@@ -136,6 +130,7 @@ class Libro
     public function __construct()
     {
         $this->categoriaLibros = new ArrayCollection();
+        $this->autor = new ArrayCollection();
         $this->comentarios = new ArrayCollection();
     }
 
@@ -388,30 +383,6 @@ class Libro
         return $this->FotoName;
     }
 
-
-    /**
-     * Set the value of Autor_id.
-     *
-     * @param integer $Autor_id
-     * @return \Principal\BibliotecaBundle\Entity\Libro
-     */
-    public function setAutorId($Autor_id)
-    {
-        $this->Autor_id = $Autor_id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of Autor_id.
-     *
-     * @return integer
-     */
-    public function getAutorId()
-    {
-        return $this->Autor_id;
-    }
-
     /**
      * Set the value of FechaHora.
      *
@@ -553,24 +524,38 @@ class Libro
     {
         return $this->comentarios;
     }
-
+    
     /**
-     * Set Autor entity (many to one).
+     * Add CategoriaLibro entity to collection (one to many).
      *
-     * @param \Principal\BibliotecaBundle\Entity\Autor $autor
+     * @param \Principal\BibliotecaBundle\Entity\Libro $categoriaLibro
      * @return \Principal\BibliotecaBundle\Entity\Libro
      */
-    public function setAutor(Autor $autor = null)
+    public function addAutor($autor)
     {
-        $this->autor = $autor;
+        $autor->setLibro($this);
+        $this->autor[] = $autor;
 
         return $this;
     }
 
     /**
-     * Get Autor entity (many to one).
+     * Remove CategoriaLibro entity from collection (one to many).
      *
-     * @return \Principal\BibliotecaBundle\Entity\Autor
+     * @param \Principal\BibliotecaBundle\Entity\CategoriaLibro $categoriaLibro
+     * @return \Principal\BibliotecaBundle\Entity\Libro
+     */
+    public function removeAutor(Autor $autor)
+    {
+        $this->autor->removeElement($autor);
+
+        return $this;
+    }
+
+    /**
+     * Get CategoriaLibro entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAutor()
     {
@@ -625,7 +610,7 @@ class Libro
 
     public function __sleep()
     {
-        return array('id', 'Nombre', 'Pagina', 'Annio', 'Licencia', 'Sinopsis', 'Aprobado', 'Archivo', 'Foto', 'Autor_id', 'FechaHora', 'Usuario_id', 'Licencia_id');
+        return array('id', 'Nombre', 'Pagina', 'Annio', 'Licencia', 'Sinopsis', 'Aprobado', 'Archivo', 'Foto', 'FechaHora', 'Usuario_id', 'Licencia_id');
     }
 
     public function __toString()
