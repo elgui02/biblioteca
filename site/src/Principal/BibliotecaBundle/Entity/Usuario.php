@@ -40,11 +40,21 @@ class Usuario extends BaseUser
         $this->facebook_id = $facebookId;
         return $this;
     }
+    
+    public function getFacebookId()
+    {
+        return $this->facebook_id;
+    }
 
     public function setFacebookAccessToken($facebookAccessToken)
     {
         $this->facebook_access_token = $facebookAccessToken;
         return $this;
+    }
+   
+    public function getFacebookAccessToken()
+    {
+         return $this->facebook_access_token;
     }
 
     public function setGoogleId($googleId)
@@ -52,10 +62,20 @@ class Usuario extends BaseUser
         $this->google_id = $googleId;
         return $this;
     }
+    
+    public function getGoogleId()
+    {
+        return $this->google_id;
+    }
 
     public function setGoogleAccessToken($googleAccessToken)
     {
         $this->google_access_token = $googleAccessToken;
         return $this;
+    }
+   
+    public function getGoogleAccessToken()
+    {
+        return $this->google_access_token;
     }
 }

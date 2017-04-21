@@ -16,6 +16,10 @@ security:
             pattern:    ^/
             anonymous: true
             logout: true
+            form_login:
+                provider:               fos_userbundle
+                login_path:             fos_user_security_login 
+                check_path:             fos_user_security_check
             oauth:
                 resource_owners:
                     facebook:           "/login/check-facebook"
@@ -34,6 +38,6 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_USER }
+        - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/autor/, role: ROLE_USER }
         - { path: ^/libro/, role: ROLE_USER }

@@ -3,18 +3,14 @@
 {% block body %}
     <h1>Mis Libros</h1>
 
-    <table>
+    <table id="datatable" class="table">
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Pagina</th>
-                <th>Annio</th>
+                <th>Paginas</th>
+                <th>Año</th>
                 <th>Licencia</th>
-                <th>Sinopsis</th>
                 <th>Aprobado</th>
-                <th>Archivo</th>
-                <th>Foto</th>
-                <th>Autor_idautor</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -25,19 +21,15 @@
                 <td>{{ libro.Nombre }}</td>
                 <td>{{ libro.Pagina }}</td>
                 <td>{{ libro.Annio }}</td>
-                <td>{{ libro.Licencia }}</td>
-                <td>{{ libro.Sinopsis }}</td>
-                <td>{% if libro.Aprobado %}Yes{% else %}No{% endif %}</td>
-                <td>{{ libro.Archivo }}</td>
-                <td>{{ libro.Foto }}</td>
-                <td>{{ libro.AutoridAutor }}</td>
+                <td>{{ libro.Licencium.Licencia }}</td>
+                <td>{% if libro.Aprobado %}Sí{% else %}No{% endif %}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('libro_show', { 'id': libro.id }) }}">show</a>
+                            <a href="{{ path('libro_show', { 'id': libro.id }) }}">ver</a>
                         </li>
                         <li>
-                            <a href="{{ path('libro_edit', { 'id': libro.id }) }}">edit</a>
+                            <a href="{{ path('libro_edit', { 'id': libro.id }) }}">editar</a>
                         </li>
                     </ul>
                 </td>
@@ -48,7 +40,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('libro_new') }}">Create a new libro</a>
+            <a href="{{ path('libro_new') }}" class="btn btn-primary">Nuevo libro</a>
         </li>
     </ul>
 {% endblock %}
