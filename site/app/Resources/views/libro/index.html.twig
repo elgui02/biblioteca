@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Libros list</h1>
+    <h1>Mis Libros</h1>
 
     <table>
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>Pagina</th>
                 <th>Annio</th>
@@ -22,7 +21,7 @@
         <tbody>
         {% for libro in libros %}
             <tr>
-                <td><a href="{{ path('libro_show', { 'id': libro.id }) }}">{{ libro.id }}</a></td>
+                <td><a href="{{ path('libro_show', { 'id': libro.id }) }}">{{ libro.Nombre }}</a></td>
                 <td>{{ libro.Nombre }}</td>
                 <td>{{ libro.Pagina }}</td>
                 <td>{{ libro.Annio }}</td>

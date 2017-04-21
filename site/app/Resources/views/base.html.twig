@@ -16,6 +16,7 @@
     <link href="{{ asset('bundles/principalbiblioteca/css/responsive.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('bundles/principalbiblioteca/css/bootstrap-social.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock stylesheets %}
     <!--[if lt IE 9]>
     <script src="{{ asset('bundles/principalbiblioteca/js/html5shiv.js') }}"></script>
@@ -103,6 +104,8 @@
                     <div class="widget categories">
                         {{ render(controller('FOSUserBundle:Security:login')) }}
                         Si aún no tienes cuenta puedes registrarte <a href="{{ path("fos_user_registration_register") }}">aqui</a>
+                        <br />O inicia sesión con alguna de estas redes
+                        {{ render(controller('HWIOAuthBundle:Connect:connect')) }}
                     </div><!--/.recent comments-->
 	                {% endif%}
     				<div class="widget categories">

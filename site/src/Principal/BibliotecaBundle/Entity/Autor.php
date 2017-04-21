@@ -248,7 +248,7 @@ class Autor
      * @param \Principal\BibliotecaBundle\Entity\Libro $libro
      * @return \Principal\BibliotecaBundle\Entity\Autor
      */
-    public function addLibro(LibroAutor $libro)
+    public function addLibro(Autor $libro)
     {
         $libro->setAutor($this);
         $this->libros[] = $libro;

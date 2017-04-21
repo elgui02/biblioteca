@@ -27,7 +27,9 @@ class LibroController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $libros = $em->getRepository('PrincipalBibliotecaBundle:Libro')->findAll();
+        $libros = $em->getRepository('PrincipalBibliotecaBundle:Libro')->findBy(array(
+            'Usuario_id' => $this->getUser()->getId(),
+        ));
 
         return $this->render('libro/index.html.twig', array(
             'libros' => $libros,

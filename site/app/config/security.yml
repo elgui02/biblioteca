@@ -13,15 +13,22 @@ security:
 
     firewalls:
         main:
-            pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-                # if you are using Symfony < 2.8, use the following config instead:
-                # csrf_provider: form.csrf_provider
+            pattern:    ^/
+            anonymous: true
+            logout: true
+            oauth:
+                resource_owners:
+                    facebook:           "/login/check-facebook"
+                    google:             "/login/check-google"
+                login_path:        /login
+                use_forward:       false
+                failure_path:      /login
 
-            logout:       true
-            anonymous:    true
+                oauth_user_provider:
+                    service: my.oauth_aware.user_provider.service 
+
+            logout:
+                path: /logout
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

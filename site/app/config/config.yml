@@ -108,6 +108,22 @@ knp_paginator:
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig  # plantilla controles
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # plantilla links ordenación
 
+hwi_oauth:
+    firewall_names: [main]
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           <id>
+            client_secret:       <secrete>
+        google:
+            type:                google
+            client_id:           <id>
+            client_secret:       <secret>
+            scope:               "https://www.googleapis.com/auth/plus.login"
+            options:
+                request_visible_actions: "http://schemas.google.com/AddActivity http://schemas.google.com/CommentActivity"
+
+
 easy_admin:
     entities:
         - Principal\BibliotecaBundle\Entity\Usuario

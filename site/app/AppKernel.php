@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Principal\BibliotecaBundle\PrincipalBibliotecaBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
